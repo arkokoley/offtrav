@@ -35,9 +35,9 @@ def getDirections(start, end):
 				print "From:"+eachStep["transit_details"]["departure_stop"]["name"]+" "
 				print "To:"+eachStep["transit_details"]["arrival_stop"]["name"]
 				if "short_name" in eachStep["transit_details"]["line"]:
-					print "Using::"+eachStep["transit_details"]["line"]["short_name"]+" "+eachStep["transit_details"]["departure_time"]["text"]
+					print "Using:"+eachStep["transit_details"]["line"]["short_name"]+" "+eachStep["transit_details"]["departure_time"]["text"]
 				else:
-					print "Using::"+eachStep["transit_details"]["line"]["name"]+" "+eachStep["transit_details"]["departure_time"]["text"]
+					print "Using:"+eachStep["transit_details"]["line"]["name"]+" "+eachStep["transit_details"]["departure_time"]["text"]
 			if ((eachStep["transit_details"]["line"]["vehicle"]["type"]=="HEAVY_RAIL")|(eachStep["transit_details"]["line"]["vehicle"]["type"]=="RAIL")):
 				print "From:"+eachStep["transit_details"]["departure_stop"]["name"]+" "
 				print "To:"+eachStep["transit_details"]["arrival_stop"]["name"]
