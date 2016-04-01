@@ -20,36 +20,38 @@ def getDirections(start, end):
 	jsonData=data.json()
 	new = dumps(jsonData)
 	new=cleanhtml(new)
+	final=""
 	newest = yaml.safe_load(new)
 	init = newest['routes'][0]["legs"][0]["start_address"].split(",")
-	final = newest['routes'][0]["legs"][0]["end_address"].split(",")
+	dest = newest['routes'][0]["legs"][0]["end_address"].split(",")
 	print "CurrentLoc:"+init[0]
-	print "Dest:"+final[0]
+	print "Dest:"+dest[0]
 	i=0;
 	for eachStep in newest['routes'][0]["legs"][0]["steps"]:
 		i=i+1
 		if eachStep["travel_mode"]=="TRANSIT":
-			print str(i)+")"+eachStep["transit_details"]["line"]["vehicle"]["type"]
-			print eachStep["html_instructions"]
+			final=final+ str(i)+")"+eachStep["transit_details"]["line"]["vehicle"]["type"]+"\n"
+			final=final+ eachStep["html_instructions"]+"\n"
 			if eachStep["transit_details"]["line"]["vehicle"]["type"]=="BUS":
-				print "From:"+eachStep["transit_details"]["departure_stop"]["name"]+" "
-				print "To:"+eachStep["transit_details"]["arrival_stop"]["name"]
+				final=final+ "From:"+eachStep["transit_details"]["departure_stop"]["name"]+" "+"\n"
+				final=final+ "To:"+eachStep["transit_details"]["arrival_stop"]["name"]+"\n"
 				if "short_name" in eachStep["transit_details"]["line"]:
-					print "Using:"+eachStep["transit_details"]["line"]["short_name"]+" "+eachStep["transit_details"]["departure_time"]["text"]
+					final=final+ "Using:"+eachStep["transit_details"]["line"]["short_name"]+" "+eachStep["transit_details"]["departure_time"]["text"]+"\n"
 				else:
-					print "Using:"+eachStep["transit_details"]["line"]["name"]+" "+eachStep["transit_details"]["departure_time"]["text"]
+					final=final+ "Using:"+eachStep["transit_details"]["line"]["name"]+" "+eachStep["transit_details"]["departure_time"]["text"]+"\n"
 			if ((eachStep["transit_details"]["line"]["vehicle"]["type"]=="HEAVY_RAIL")|(eachStep["transit_details"]["line"]["vehicle"]["type"]=="RAIL")):
-				print "From:"+eachStep["transit_details"]["departure_stop"]["name"]+" "
-				print "To:"+eachStep["transit_details"]["arrival_stop"]["name"]
-				print "Using:"+eachStep["transit_details"]["line"]["name"]+" "+eachStep["transit_details"]["departure_time"]["text"]
+				final=final+ "From:"+eachStep["transit_details"]["departure_stop"]["name"]+" "+"\n"
+				final=final+ "To:"+eachStep["transit_details"]["arrival_stop"]["name"]+"\n"
+				final=final+ "Using:"+eachStep["transit_details"]["line"]["name"]+" "+eachStep["transit_details"]["departure_time"]["text"]+"\n"
 		if eachStep["travel_mode"]=="WALKING":
-			print str(i)+")"+eachStep["travel_mode"]
+			final=final+ str(i)+")"+eachStep["travel_mode"]+"\n"
 			temp=eachStep["html_instructions"].split(",")
-			print temp[0]
+			final=final+ temp[0]+"\n"
 		if "steps" in eachStep:
-			print "for which:"
+			final=final+ "for which:"+"\n"
 			for every in eachStep["steps"]:
 				if "html_instructions" in every:
-					print every["html_instructions"]
+					final=final+ every["html_instructions"]+"\n"
+	return final
 
-getDirections("Whitefield, Bangalore","Central Silk Boar")
+#print getDirections("Whitefield, Bangalore","Central Silk Boar")
