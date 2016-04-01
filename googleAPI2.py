@@ -2,7 +2,6 @@ import requests
 import yaml
 import re
 from json import load, dumps
-from datetime import datetime
 
 def cleanhtml(raw_html):
   cleanr =re.compile('<.*?>')
@@ -10,14 +9,12 @@ def cleanhtml(raw_html):
   return cleantext
 
 def getDirections(start, end):
-	now = datetime.now()
 	api_key="AIzaSyDCxrDO4MC2N4H30q7iTfge2hGQLe14kuE"
 	base_url="https://maps.googleapis.com/maps/api/directions/json?"
 	url=base_url+"key="+api_key
 	origin=start
 	destination=end
 	mode="transit"
-	now = datetime(2016, 4, 1, 2, 32, 0, 53977)
 	url=url+"&origin="+origin+"&destination="+destination+"&mode="+mode+"&alternatives=true"+"&departure_time=now"
 	data = requests.get(url)
 	jsonData=data.json()
@@ -55,4 +52,4 @@ def getDirections(start, end):
 				if "html_instructions" in every:
 					print every["html_instructions"]
 
-#getDirections("Whitefield, Bangalore","Central Silk Boar")
+getDirections("Whitefield, Bangalore","Central Silk Boar")
