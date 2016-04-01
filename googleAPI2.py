@@ -8,7 +8,7 @@ def cleanhtml(raw_html):
   cleantext = re.sub(cleanr,'', raw_html)
   return cleantext
 
-def getDirections(start, end):
+def getDirections(type, start, end):
 	api_key="AIzaSyDCxrDO4MC2N4H30q7iTfge2hGQLe14kuE"
 	base_url="https://maps.googleapis.com/maps/api/directions/json?"
 	url=base_url+"key="+api_key
@@ -24,7 +24,10 @@ def getDirections(start, end):
 	newest = yaml.safe_load(new)
 	init = newest['routes'][0]["legs"][0]["start_address"].split(",")
 	dest = newest['routes'][0]["legs"][0]["end_address"].split(",")
-	print "CurrentLoc:"+init[0]
+	if type=="geo":
+		print "CurrentLoc:"+init[-5]+","+init[-4]
+	else:
+		print "CurrentLoc:"+init[0]
 	print "Dest:"+dest[0]
 	i=0;
 	for eachStep in newest['routes'][0]["legs"][0]["steps"]:
@@ -54,4 +57,4 @@ def getDirections(start, end):
 					final=final+ every["html_instructions"]+"\n"
 	return final
 
-#print getDirections("Whitefield, Bangalore","Central Silk Boar")
+print getDirections("geo", "12.9170538,77.67104309999999","Central Silk Boar")
