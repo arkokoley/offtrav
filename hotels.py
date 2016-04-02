@@ -25,6 +25,7 @@ print getlatlong("Central Silk Board")
 temp=getlatlong("Central Silk Board")
 print temp[0]
 print temp[1]
+coordArray=[]
 
 def getHotels(start, end,lat,log):
 	hotels = Hotels('tkGbmBwS846vek2wKrtt22E3Pp72lUAC')
@@ -52,7 +53,8 @@ def getHotels(start, end,lat,log):
 		#+eachStep["travel_mode"]
 		final=final+ "Total Price:"+newest['results'][i]['total_price']['amount']+" "+"\n"
 		final=final+ "Currency Mode:"+newest['results'][i]['total_price']['currency']+" "+"\n"
-		final=final+ "Currency Mode:"+newest['results'][i]['property_name']+" "+"\n"
+		final=final+ "Hotel Name:"+newest['results'][i]['property_name']+" "+"\n"
+		coordArray.append(str(newest['results'][i]['location']['latitude'])+","+str(newest['results'][i]['location']['longitude']))
 		#print eachStep['total_price']
 		#print eachStep['total_price']
 		#print eachStep['property_name']
@@ -62,7 +64,7 @@ def getHotels(start, end,lat,log):
 	#	print newest['results'][j]['property_name']
 	#	print newest['results'][j]['address']
 	#	print newest['results'][j]['contacts']
-
+	print coordArray
 	return final
 
 print getHotels("2016-04-02","2016-04-04",temp[0],temp[1])
