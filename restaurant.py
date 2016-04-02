@@ -4,8 +4,8 @@ import json
 import yaml
 import re
 from json import load, dumps
-lat="12.8446784"
-lon="77.6610528"
+#lat="12.8446784"
+#lon="77.6610528"
 
 def getDist(originLat,originLon, destLat, destLon):
     if destLat=="0.0000000000":
@@ -34,6 +34,11 @@ def getNearbyRestaurantsUsingCoord(lat,lon):
     dat= json.load(dat)
     dat = dumps(dat)
     finalData = yaml.safe_load(dat)
+    coordArray=[]
+    i=0
+    while i<5:
+        i=i+1
+        coordArray.append(finalData["nearby_restaurants"][str(i)]["restaurant"]["location"]["latitude"]+","+finalData["nearby_restaurants"][str(i)]["restaurant"]["location"]["longitude"])
     final=final+"1)"+finalData["nearby_restaurants"]["1"]["restaurant"]["name"] + " Price(for2):"+ str(finalData["nearby_restaurants"]["1"]["restaurant"]["average_cost_for_two"])+" " +getDist(lat,lon, finalData["nearby_restaurants"]["1"]["restaurant"]["location"]["latitude"], finalData["nearby_restaurants"]["1"]["restaurant"]["location"]["longitude"])+"\n"
     final=final+"2)"+finalData["nearby_restaurants"]["2"]["restaurant"]["name"] + " Price(for2):"+ str(finalData["nearby_restaurants"]["2"]["restaurant"]["average_cost_for_two"])+" " +getDist(lat,lon, finalData["nearby_restaurants"]["2"]["restaurant"]["location"]["latitude"], finalData["nearby_restaurants"]["2"]["restaurant"]["location"]["longitude"])+"\n"
     final=final+"3)"+finalData["nearby_restaurants"]["3"]["restaurant"]["name"] + " Price(for2):"+ str(finalData["nearby_restaurants"]["3"]["restaurant"]["average_cost_for_two"])+" " +getDist(lat,lon, finalData["nearby_restaurants"]["3"]["restaurant"]["location"]["latitude"], finalData["nearby_restaurants"]["3"]["restaurant"]["location"]["longitude"])+"\n"
