@@ -20,14 +20,14 @@ def getHotels(start, end):
 		)
 	new = dumps(resp)
 	newest = yaml.safe_load(new)
-	l = [] 
+	l = []
 	final=""
 	#print len(newest['results'])
 	value = len(newest['results'])
 	#print value
 	for i in range(0,value):
 		#+eachStep["travel_mode"]
-		final=final+ "Total Price:"+newest['results'][i]['total_price']['amount']+" "+"\n"
+        final=final+ "Total Price:"+newest['results'][i]['total_price']['amount']+" "+"\n"
 		final=final+ "Currency Mode:"+newest['results'][i]['total_price']['currency']+" "+"\n"
 		final=final+ "Currency Mode:"+newest['results'][i]['property_name']+" "+"\n"
 		#print eachStep['total_price']
@@ -66,3 +66,17 @@ def getHotel(start, end, code):
 	return final
 
 print getHotel("2016-04-02","2016-04-04","YXBLRACE")
+
+def getlatlong(location):
+    api_key="AIzaSyDCxrDO4MC2N4H30q7iTfge2hGQLe14kuE"
+    base_url="https://maps.googleapis.com/maps/api/geocode/json?"
+    url=base_url+"key="+api_key+"&address="+loc
+    data = requests.get(url)
+    jsonData=data.json()
+    new = dumps(jsonData)
+    newest = yaml.safe_load(new)
+    coord = []
+    coord.append(newest["results"][0]["geometry"]["location"]["lat"])
+    coord.append(newest["results"][0]["geometry"]["location"]["lng"])
+    return coord
+    # print newest
